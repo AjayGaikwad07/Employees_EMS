@@ -2,175 +2,118 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0; /* Set margin to 0 */
-            padding: 0; /* Set padding to 0 */
-            display: flex; /* Use flexbox for centering */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Set height to full viewport height */
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-        .container {
-            max-width: 800px; /* Increased max-width to accommodate two columns */
-            background-color: #fff; /* Container background color */
-            padding: 40px; /* Container padding */
-            border-radius: 10px; /* Container border radius */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Container box shadow */
-        }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        h1 {
-            color: #333;
-            text-align: center; /* Center align the heading */
-        }
+    <!-- Bootstrap JS and jQuery (optional, needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzapj0r1TlL/gyXzOZGZg3G2AiW7BlnfRJx2xnUm4" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCk+2ELD+5WOWFHp5fGJw2HQCIpNHcESDli5" crossorigin="anonymous"></script>
 
-        form {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Two equal-width columns */
-            gap: 30px; /* Gap between elements */
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-
-        .button1 {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        display: block; /* Make the button a block element */
-        margin: 20px auto; /* Center align the button */
-    }
-
-    .button1:hover {
-        background-color: #555;
-    }
-        a {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #333;
-            text-align: center; /* Center align the link */
-        }
-
-        a:hover {
-            color: #555;
-        }
-
-         .gender-box {
-              border: 1px solid #ccc;
-              border-radius: 5px;
-              padding: 24px;
-              width: fit-content;
-              margin: 0 auto;
-            }
-
-            .gender-box label {
-              margin-right: 10px;
-            }
-
-            .gender-box input[type="radio"] {
-              margin-right: 5px;
-            }
-
-            .error-message {
-            color: red;
-            margin-top: 10px;
-            text-align: center;
-            }
-
-        .success-message {
-            color: green;
-            margin-top: 10px;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    <form th:action="@{/login}" method="post">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <input type="password" id="password" name="password" class="form-control" required>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">
+                                        <i id="password-toggle-icon" class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <a href="#" class="btn btn-link">Forgot Password?</a>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <span>Don't have an account?</span>
+                    <a href="#" class="btn btn-link" onclick="showSignUpForm()">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="container"> <!-- Container to center content -->
-    <p th:text="${errorMessage}" class="error-message"></p>
-    <p th:text="${message}" class="success-message"></p>
-
-    <h1>New Employee Account</h1>
-    <form action="/accounts/save" method="post" th:object="${account}">
-        <div>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required>
+<!-- Sign Up Form -->
+<div id="signUpForm" class="container mt-5" style="display: none;">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Sign Up</div>
+                <div class="card-body">
+                    <form th:action="@{/signup}" method="post">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <span>Already have an account?</span>
+                    <a href="#" class="btn btn-link" onclick="showLoginForm()">Login</a>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required>
-        </div>
-
-        <div>
-            <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" required>
-        </div>
-        <div>
-            <label for="mobileNumber">Mobile Number:</label>
-            <input type="text" id="mobileNumber" name="mobileNumber" required>
-        </div>
-        <div>
-            <label for="accountNumber">Account Number:</label>
-            <input type="text" id="accountNumber" name="accountNumber" required>
-        </div>
-        <div>
-            <label for="salary">Salary:</label>
-            <input type="number" id="salary" name="salary">
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="employee_title">Employee Title:</label>
-            <input type="text" id="employee_title" name="employee_title" required>
-        </div>
-        <div class="gender-box">
-            <label1>Gender:</label1>
-            <input type="radio" id="male" name="gender" value="male">
-            <label1 for="male">Male</label1>
-            <input type="radio" id="female" name="gender" value="female">
-            <label1 for="female">Female</label1>
-        </div>
-
-        <br><button class="button1" type="submit">New Account</button></br>
-    </form>
+    </div>
 </div>
 
 <script>
-    function validateForm(){
-        var firstName = document.getElementById("firstName").value;
-        var lastName = document.getElementById("lastName").value;
+    function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("password");
+      var icon = document.getElementById("password-toggle-icon");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
 
-     if(firstName.trim()===""){
-        alert("Please enter first name");
-        return false;
-     }
-     if(lastName.trim()===""){
-        alert("Please enter last name");
-     return false;
-     }
+    function showSignUpForm() {
+      document.getElementById("signUpForm").style.display = "block";
+      document.getElementById("loginForm").style.display = "none";
+    }
 
-     return true;
-
+    function showLoginForm() {
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("signUpForm").style.display = "none";
+    }
 </script>
 
 </body>

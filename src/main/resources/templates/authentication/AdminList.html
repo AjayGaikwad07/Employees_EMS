@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account List</title>
+    <link rel="stylesheet" type="text/css" href="design.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            color: #333;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+<h2>Admin Account List</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Email ID</th>
+<!--        <th>Employee PRN</th>-->
+        <th>Action</th>
+    </tr>
+
+    <!-- Assuming admins is a list of objects with properties: id, username, password, email, name -->
+    <tr th:each="admin : ${admin_office}">
+        <td th:text="${admin.id}"></td>
+        <td th:text="${admin.name}"></td>
+        <td th:text="${admin.username}"></td>
+        <td th:text="${admin.password}"></td>
+        <td th:text="${admin.email}"></td>
+<!--        <td th:text="${admin.prn_number}"></td>-->
+        <td>
+            <a th:href="@{/edit/{id}(id=${admin.id})}">Edit</a>
+            <a th:href="@{/delete/{id}(id=${admin.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<div class="button-container">
+    <a href="/formsignup" class="button">Create New Admin Account</a>
+</div>
+
+<!--<a href="/accounts/new">Create New Account</a>-->
+
+</body>
+</html>
