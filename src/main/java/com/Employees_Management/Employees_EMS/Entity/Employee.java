@@ -3,6 +3,7 @@ package com.Employees_Management.Employees_EMS.Entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Entity
